@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"slices"
 )
 
 func main() {
@@ -143,13 +144,22 @@ func marks() {
 	fmt.Println("Введите оценку ученику Для выхода из программы нажмите (0)")
 
 	for {
-		fmt.Scan(&input)
+		_, err := fmt.Scan(&input)
 		if input == 0 {
 			break
 		}
+		if err != nil {
+			fmt.Println("Введите другое значение")
+			continue
+		}
+		if input < 1 {
+			fmt.Println("Оценка не может быть меньше 0")
+		}
+
 		mark = append(mark, input)
 	}
 	fmt.Println("Список оценок", mark)
+
 	var sum float64
 	var middle float64
 
@@ -164,5 +174,9 @@ func marks() {
 			fmt.Println("Оценкa выше среднего", mark[i])
 		}
 	}
+	maxMark := slices.Max(mark)
+	fmt.Println("Самая высокая оценка", maxMark)
 
+	minMark := slices.Min(mark)
+	fmt.Println("Самая низкая оценка", minMark)
 }
